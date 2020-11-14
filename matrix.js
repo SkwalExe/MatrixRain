@@ -1,0 +1,43 @@
+
+document.oncontextmenu = new Function("return false");
+
+
+var c = document.getElementById("c");
+var ctx = c.getContext("2d");
+
+c.height = window.innerHeight;
+c.width = window.innerWidth;
+
+
+var char = "$*%!:/;.,?&~#\"\'{([-|`\\_^@)]=}"
+char = char.split("")
+
+var font_size = 15;
+var columns = c.width / font_size
+
+var drops = [];
+for (var z = 0; z < columns; z++)
+	drops[z] = 1;
+
+
+function draw() {
+	ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+	ctx.fillRect(0, 0, c.width, c.height);
+
+	ctx.fillStyle = "#0F0";
+	ctx.font = font_size + "px arial";
+
+	for (var i = 0; i < drops.length; i++) {
+
+		var text = char[Math.floor(Math.random() * char.length)];
+
+		ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+		if (drops[i] * font_size > c.height && Math.random() > 0.975)
+			drops[i] = 0;
+
+		drops[i]++;
+	}
+}
+
+setInterval(draw, 33);
